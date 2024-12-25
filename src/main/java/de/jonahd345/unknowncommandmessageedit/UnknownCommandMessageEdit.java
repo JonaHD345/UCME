@@ -12,7 +12,7 @@ public final class UnknownCommandMessageEdit extends JavaPlugin {
     @Override
     public void onEnable() {
         // Check if PlaceholderAPI is enabled
-        this.isPlaceholderAPIEnabled = getServer().getPluginManager().getPlugin("PlaceholderAPI") != null;
+        this.isPlaceholderAPIEnabled = getServer().getPluginManager().isPluginEnabled("PlaceholderAPI");
 
         loadConfig();
         this.init();
