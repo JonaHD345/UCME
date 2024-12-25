@@ -1,6 +1,7 @@
 package de.jonahd345.unknowncommandmessageedit.listener;
 
 import de.jonahd345.unknowncommandmessageedit.UnknownCommandMessageEdit;
+import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -19,7 +20,11 @@ public class CommandListener implements Listener {
             String cmd = e.getMessage().split(" ")[0];
             HelpTopic topic = Bukkit.getServer().getHelpMap().getHelpTopic(cmd);
             String message = UnknownCommandMessageEdit.getInstance().getConfig().getString("Config.Message");
+
             message = message.replace("%Command%", cmd);
+            if (UnknownCommandMessageEdit.getInstance().isPlaceholderAPIEnabled()) {
+                message = PlaceholderAPI.setPlaceholders(player, message);
+            }
             if (topic == null) {
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
                 e.setCancelled(true);

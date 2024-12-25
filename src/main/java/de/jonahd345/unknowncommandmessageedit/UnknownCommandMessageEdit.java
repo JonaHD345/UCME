@@ -1,14 +1,19 @@
 package de.jonahd345.unknowncommandmessageedit;
 
 import de.jonahd345.unknowncommandmessageedit.listener.CommandListener;
+import lombok.Getter;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class UnknownCommandMessageEdit extends JavaPlugin {
-    private static UnknownCommandMessageEdit instance;
+    @Getter
+    private boolean isPlaceholderAPIEnabled;
 
     @Override
     public void onEnable() {
+        // Check if PlaceholderAPI is enabled
+        this.isPlaceholderAPIEnabled = getServer().getPluginManager().getPlugin("PlaceholderAPI") != null;
+
         loadConfig();
         this.init();
     }
@@ -23,15 +28,11 @@ public final class UnknownCommandMessageEdit extends JavaPlugin {
     }
 
     public static UnknownCommandMessageEdit getInstance() {
-        return instance;
+        return getPlugin(UnknownCommandMessageEdit.class);
     }
 
     public void loadConfig() {
         getConfig().options().copyDefaults(true);
         saveConfig();
-    }
-
-    public void onLoad() {
-        instance = this;
     }
 }
